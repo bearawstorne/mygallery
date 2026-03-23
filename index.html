@@ -1,0 +1,126 @@
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #fff;
+    overflow: hidden;
+  }
+
+  #g-outer {
+    background: #fff;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  #g-outer::-webkit-scrollbar { display: none; }
+
+  #g-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    height: 100vh;
+    padding: 0 100px;
+    gap: 50px;
+  }
+
+  .gi {
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .gi img {
+    display: block;
+    max-height: 420px;
+    width: auto;
+    pointer-events: none;
+    /* Remove the line below if you want colour photos */
+    filter: grayscale(100%);
+  }
+
+  .nudge-up     { margin-top: -80px; }
+  .nudge-down   { margin-top:  80px; }
+  .nudge-up-s   { margin-top: -40px; }
+  .nudge-down-s { margin-top:  40px; }
+
+  #prog-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+    pointer-events: none;
+  }
+
+  #prog-fill {
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    width: 14%;
+    transition: width 0.08s linear;
+  }
+</style>
+
+<div id="g-outer">
+  <div id="g-track">
+
+    <!-- ============================================================
+         Replace every YOUR_IMAGE_URL_N_HERE with your image URL.
+         In Wix Media Manager: click a photo → Copy URL.
+         Each image displays at its natural ratio.
+         Nudge classes shift images up/down for editorial stagger:
+           nudge-up, nudge-down, nudge-up-s, nudge-down-s
+         Add or remove <div class="gi"> blocks as needed.
+         ============================================================ -->
+
+    <div class="gi nudge-down">
+      <img src="YOUR_IMAGE_URL_1_HERE" alt="">
+    </div>
+
+    <div class="gi nudge-up">
+      <img src="YOUR_IMAGE_URL_2_HERE" alt="">
+    </div>
+
+    <div class="gi nudge-down-s">
+      <img src="YOUR_IMAGE_URL_3_HERE" alt="">
+    </div>
+
+    <div class="gi nudge-up-s">
+      <img src="YOUR_IMAGE_URL_4_HERE" alt="">
+    </div>
+
+    <div class="gi nudge-down">
+      <img src="YOUR_IMAGE_URL_5_HERE" alt="">
+    </div>
+
+    <div class="gi nudge-up">
+      <img src="YOUR_IMAGE_URL_6_HERE" alt="">
+    </div>
+
+    <div class="gi nudge-down-s">
+      <img src="YOUR_IMAGE_URL_7_HERE" alt="">
+    </div>
+
+  </div>
+</div>
+
+<div id="prog-bar"><div id="prog-fill"></div></div>
+
+<script>
+  var outer = document.getElementById('g-outer');
+  var fill  = document.getElementById('prog-fill');
+
+  outer.addEventListener('scroll', function() {
+    var max = outer.scrollWidth - outer.clientWidth;
+    var pct = max > 0 ? (outer.scrollLeft / max) * 76 + 12 : 12;
+    fill.style.width = pct + '%';
+  });
+
+  outer.addEventListener('wheel', function(e) {
+    if (e.deltaY !== 0) {
+      e.preventDefault();
+      outer.scrollLeft += e.deltaY * 0.9;
+    }
+  }, { passive: false });
+</script>
